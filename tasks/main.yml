@@ -7,12 +7,13 @@
   register: sestatus
   failed_when: false
   ignore_errors: true
+  always_run: true
 
 - name: check the ssh_password policy state
-  shell: semodule -l | grep "ssh_password" | awk '{print $3}' 
+  shell: semodule -l | grep "ssh_password" | awk '{print $3}'
   register: selinux_policy_state
   when: sestatus.rc == 0 and sestatus.stdout != 'Disabled'
-  changed_when: false
+  failed_when: false
 
 - name: create sshd_config and set permissions to root/600
   template: src='opensshd.conf.j2' dest='/etc/ssh/sshd_config' mode=0600 owner=root group=root validate="/usr/sbin/sshd -T -f %s"
