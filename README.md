@@ -15,7 +15,7 @@ This role provides secure ssh-client and ssh-server configurations.
 ## Role Variables
 * ``network_ipv6_enable`` - true if IPv6 is needed
 * ``ssh_client_cbc_required`` - true if CBC for ciphers is required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure ciphers enabled. CBC is a weak alternative. Anything weaker should be avoided and is thus not available.
-* ``ssh_server_cbc_required`` - true if CBC for ciphers is required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure ciphers enabled. CBC is a weak alternative. Anything weaker should be avoided and is thus not available.       
+* ``ssh_server_cbc_required`` - true if CBC for ciphers is required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure ciphers enabled. CBC is a weak alternative. Anything weaker should be avoided and is thus not available.
 * ``ssh_client_weak_hmac`` - true if weaker HMAC mechanisms are required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure HMACs enabled.
 * ``ssh_server_weak_hmac`` - true if weaker HMAC mechanisms are required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure HMACs enabled.
 * ``ssh_client_weak_kex`` - true if weaker Key-Exchange (KEX) mechanisms are required. This is usually only necessary, if older M2M mechanism need to communicate with SSH, that don't have any of the configured secure KEXs enabled.
@@ -57,9 +57,6 @@ Next install test-kitchen:
 # Install dependencies
 gem install bundler
 bundle install
-
-# Fetch tests
-bundle exec thor kitchen:fetch-remote-tests
 
 # fast test on one machine
 bundle exec kitchen test default-ubuntu-1204
@@ -124,4 +121,4 @@ limitations under the License.
 
 [1]: http://travis-ci.org/hardening-io/ansible-ssh-hardening
 [2]: https://gitter.im/hardening-io/general
-[3]: https://galaxy.ansible.com/list#/roles/4204 
+[3]: https://galaxy.ansible.com/list#/roles/4204
