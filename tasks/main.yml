@@ -6,11 +6,8 @@
   command: getenforce
   register: sestatus
   failed_when: false
-<<<<<<< a583ee1a9f8a46d75e32fb60fe87e457448b3be6
   ignore_errors: true
-=======
   changed_when: false
->>>>>>> add back changed_when, so it wont trigger a changed
   always_run: true
 
 - name: check the ssh_password policy state
