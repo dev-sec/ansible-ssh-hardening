@@ -73,3 +73,7 @@
 - name: remove selinux-policy when Pam is used, because Allowing sshd to read the shadow file directly is considered a potential security risk (http://danwalsh.livejournal.com/12333.html)
   shell: semodule -r ssh_password
   when: sestatus.rc == 0 and ssh_use_pam and ssh_password_module.stdout.find('ssh_password') == 0
+
+- name: ensure service is enabled and running
+  service: name={{ sshd_service_name }} state=started enabled=yes
+  when: ssh_server_enabled

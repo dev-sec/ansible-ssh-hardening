@@ -113,7 +113,6 @@ LogLevel VERBOSE
 UseLogin no
 UsePrivilegeSeparation {% if (ansible_distribution == 'Debian' and ansible_distribution_major_version <= '6') or (ansible_os_family in ['Oracle Linux', 'RedHat'] and ansible_distribution_major_version <= '6') -%}{{ssh_ps53}}{% else %}{{ssh_ps59}}{% endif %}
 
-PermitUserEnvironment no
 LoginGraceTime 30s
 MaxAuthTries {{ssh_max_auth_retries}}
 MaxSessions 10
@@ -190,9 +189,26 @@ GatewayPorts no
 X11Forwarding no
 X11UseLocalhost yes
 
+# User environment configuration
+# ==============================
+
+{% if ssh_server_permit_environment_vars %}
+PermitUserEnvironment yes
+{% for item in ssh_server_permit_environment_vars %}
+AcceptEnv {{ item }}
+{% endfor %}
+{% else %}
+PermitUserEnvironment no
+{% endif %}
 
 # Misc. configuration
 # ===================
+
+{% if ssh_compression %}
+Compression {{ ssh_compression }}
+{% endif %}
+
+UseDNS {{ 'yes' if ssh_use_dns else 'no' }}
 
 PrintMotd {{ 'yes' if ssh_print_motd else 'no' }}
 
@@ -219,4 +235,24 @@ AllowAgentForwarding no
 PasswordAuthentication no
 PermitRootLogin no
 X11Forwarding no
+{% endif %}
+
+# Group matching configuration
+# ============================
+
+{% if ssh_server_match_group %}
+{% for item in ssh_server_match_group %}
+Match Group {{ item.group }}
+    {{ item.rules | indent(4) }}
+{% endfor %}
+{% endif %}
+
+# User matching configuration
+# ===========================
+
+{% if ssh_server_match_user %}
+{% for item in ssh_server_match_user %}
+Match User {{ item.user }}
+    {{ item.rules | indent(4) }}
+{% endfor %}
 {% endif %}
