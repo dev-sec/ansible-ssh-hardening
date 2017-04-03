@@ -106,4 +106,4 @@
     shell: semodule -r ssh_password
     when: ssh_use_pam and ssh_password_module.stdout.find('ssh_password') == 0
 
-  when: sestatus.rc == 0
+  when: sestatus.stdout != 'Disabled'
