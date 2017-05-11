@@ -96,6 +96,9 @@ sftp_chroot_dir: /home/%u
 # enable experimental client roaming
 ssh_client_roaming: false
 
+# Enable server DNS lookups when a client connects
+ssh_use_dns: 'yes'
+
 
 ssh_ps53: 'yes'
 ssh_ps59: 'sandbox'
