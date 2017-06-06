@@ -49,13 +49,6 @@
   notify: restart sshd
   when: sshd_register_moduli.stdout
 
-- name: test to see if selinux is running
-  command: getenforce
-  register: sestatus
-  failed_when: false
-  changed_when: false
-  check_mode: no
-
 - block: # only runs when selinux is running
   - name: install selinux dependencies when selinux is installed on RHEL or Oracle Linux
     yum: name="{{item}}" state=installed
@@ -96,11 +89,11 @@
     - name: install selinux policy
       shell: semodule -i {{ ssh_custom_selinux_dir }}/ssh_password.pp
 
-    when: not ssh_use_pam and sestatus.stdout != 'Disabled' and ssh_password_module.stdout.find('ssh_password') != 0
+    when: not ssh_use_pam and ansible_selinux.mode == "enforcing" and ssh_password_module.stdout.find('ssh_password') != 0
 
   # The following tasks only get executed when selinux is in state enforcing, UsePam is "yes" and the ssh_password module is installed.
   - name: remove selinux-policy when Pam is used, because Allowing sshd to read the shadow file directly is considered a potential security risk (http://danwalsh.livejournal.com/12333.html)
     command: semodule -r ssh_password
     when: ssh_use_pam and ssh_password_module.stdout.find('ssh_password') == 0
 
-  when: sestatus.rc == 0
+  when: ansible_selinux.status == 'enabled'
