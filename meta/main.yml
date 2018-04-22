@@ -20,6 +20,7 @@ galaxy_info:
         - wheezy
         - jessie
     - name: Amazon
+    - name: Alpine
   galaxy_tags:
     - system
     - security
