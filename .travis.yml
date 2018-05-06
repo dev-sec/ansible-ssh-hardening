@@ -47,6 +47,10 @@ env:
     init: /sbin/init
     version: latest
 
+  - distro: alpine
+    init: /bin/sh -c 'apk add --no-cache openrc ; exec /sbin/init'
+    version: latest
+
 before_install:
   # Pull container
   - 'docker pull rndmh3ro/docker-${distro}-ansible:${version}'
@@ -54,7 +58,7 @@ before_install:
 script:
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-ssh-hardening:ro ${run_opts} rndmh3ro/docker-${distro}-ansible:${version} "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-ssh-hardening:ro ${run_opts} rndmh3ro/docker-${distro}-ansible:${version} ${init} > "${container_id}"'
 
   # Test role.
   - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-ssh-hardening/default_custom.yml'

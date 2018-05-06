@@ -12,6 +12,12 @@
         - "openssh-client"
         - "openssh-server"
       ignore_errors: true
+    - apk: name="{{item}}" state=present update_cache=true
+      with_items:
+        - "openrc"
+        - "openssh-client"
+        - "openssh-server"
+      ignore_errors: true
     - file: path="/var/run/sshd" state=directory
     - name: create ssh host keys
       command: "ssh-keygen -A"
