@@ -99,9 +99,14 @@ UsePAM {{ 'yes' if (ssh_use_pam|bool) else 'no' }}
 AuthenticationMethods publickey,keyboard-interactive
 {% endif %}
 
-# Force public key auth then ask for pam device input
 {% if ssh_pam_device %}
+# Force public key auth then ask for pam device input
 AuthenticationMethods publickey,keyboard-interactive:pam
+{% endif %}
+
+{% if ssh_key_pass_2fa %}
+# Force users to authenticate with SSH key and then
+AuthenticationMethods "publickey,password" "publickey,keyboard-interactive"
 {% endif %}
 
 # Disable password-based authentication, it can allow for potentially easier brute-force attacks.
