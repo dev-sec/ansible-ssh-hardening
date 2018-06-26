@@ -172,6 +172,7 @@ ssh_ps53: 'yes'
 ssh_ps59: 'sandbox'
 
 ssh_macs: []
+sshd_macs: []
 ssh_ciphers: []
 ssh_kex: []
 
@@ -193,6 +194,8 @@ ssh_macs_66_default:
   - hmac-sha2-512
   - hmac-sha2-256
 
+ssh_macs_66_weak: "{{ ssh_macs_66_default + ['hmac-sha1'] }}"
+
 ssh_macs_76_default:
   - hmac-sha2-512-etm@openssh.com
   - hmac-sha2-256-etm@openssh.com
@@ -200,7 +203,7 @@ ssh_macs_76_default:
   - hmac-sha2-512
   - hmac-sha2-256
 
-ssh_macs_66_weak: "{{ ssh_macs_66_default + ['hmac-sha1'] }}"
+ssh_macs_76_weak: "{{ ssh_macs_76_default + ['hmac-sha1'] }}"
 
 ssh_ciphers_53_default:
   - aes256-ctr

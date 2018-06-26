@@ -57,8 +57,8 @@ LogLevel VERBOSE
 # eg Ruby's Net::SSH at around 2.2.* doesn't support sha2 for hmac, so this will have to be set true in this case.
 #
 
-{# This outputs "MACs <list-of-macs>" if ssh_macs is defined or "#MACs" if ssh_macs is undefined #}
-{{ "MACs "+ssh_macs| join(',') if ssh_macs else "MACs"|comment }}
+{# This outputs "MACs <list-of-macs>" if sshd_macs is defined or "#MACs" if sshd_macs is undefined #}
+{{ "MACs "+sshd_macs| join(',') if sshd_macs else "MACs"|comment }}
 
 # Alternative setting, if OpenSSH version is below v5.9
 #MACs hmac-ripemd160
