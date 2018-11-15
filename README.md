@@ -29,6 +29,7 @@ Warning: This role disables root-login on the target server! Please make sure yo
 |`ssh_allow_root_with_key` | false | false to disable root login altogether. Set to true to allow root to login via key-based mechanism.|
 |`ssh_allow_tcp_forwarding` | false | false to disable TCP Forwarding. Set to true to allow TCP Forwarding.|
 |`ssh_gateway_ports` | `false` | `false` to disable binding forwarded ports to non-loopback addresses. Set to `true` to force binding on wildcard address. Set to `clientspecified` to allow the client to specify which address to bind to.|
+|`ssh_stream_local_bind_unlink` | `false` | `false` to disable the deletion of stale sockets when connecting to remote machine.|
 |`ssh_allow_agent_forwarding` | false | false to disable Agent Forwarding. Set to true to allow Agent Forwarding.|
 |`ssh_pam_support` | true | true if SSH has PAM support.|
 |`ssh_use_pam` | false | false to disable pam authentication.|

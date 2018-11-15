@@ -58,6 +58,9 @@ ssh_allow_tcp_forwarding: false         # sshd
 # Set to 'clientspecified' to allow the client to specify which address to bind to.
 ssh_gateway_ports: false                # sshd
 
+# false to disable the deletion of stale sockets when connecting to remote machine.
+ssh_stream_local_bind_unlink: false     # sshd
+
 # false to disable Agent Forwarding. Set to true to allow Agent Forwarding.
 ssh_allow_agent_forwarding: false       # sshd
 

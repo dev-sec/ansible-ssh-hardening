@@ -221,6 +221,8 @@ DebianBanner {{ 'yes' if (ssh_print_debian_banner|bool) else 'no' }}
 # Reject keys that are explicitly blacklisted
 RevokedKeys /etc/ssh/revoked_keys
 
+StreamLocalBindUnlink {{ 'yes' if (ssh_stream_local_bind_unlink|bool) else 'no' }}
+
 {% if sftp_enabled %}
 # SFTP matching configuration
 # ===========================
