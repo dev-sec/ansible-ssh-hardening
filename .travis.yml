@@ -23,6 +23,8 @@ env:
     MOLECULE_DOCKER_COMMAND: "/lib/systemd/systemd"
   - MOLECULE_DISTRO: debian9
     MOLECULE_DOCKER_COMMAND: "/lib/systemd/systemd"
+  - MOLECULE_DISTRO: amazon
+    MOLECULE_DOCKER_COMMAND: "/sbin/init"
 
 
 install:
