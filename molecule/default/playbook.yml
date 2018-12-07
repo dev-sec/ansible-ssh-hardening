@@ -1,0 +1,33 @@
+---
+- name: wrapper playbook for kitchen testing "ansible-ssh-hardening" with default settings
+  hosts: all
+  become: true
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+    - name: Ensure build dependencies are installed (RedHat).
+      package:
+        name:
+          - openssh-server
+          - openssh-clients
+        state: present
+      when: ansible_os_family == 'RedHat'
+
+    - name: Ensure build dependencies are installed (Debian).
+      apt:
+        name:
+          - openssh-server
+          - openssh-client
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Create the ssh run directory
+      file: path="/var/run/sshd" state=directory
+
+    - name: Create ssh host keys
+      command: "ssh-keygen -A"
+      when: not ((ansible_os_family in ['Oracle Linux', 'RedHat']) and ansible_distribution_major_version < '7')
+
+  roles:
+    - ansible-ssh-hardening
