@@ -18,7 +18,7 @@ env:
   - MOLECULE_DISTRO: ubuntu1804
     MOLECULE_DOCKER_COMMAND: "/lib/systemd/systemd"
   - MOLECULE_DISTRO: debian7
-    MOLECULE_DOCKER_COMMAND: "/lib/systemd/systemd"
+    MOLECULE_DOCKER_COMMAND: "/sbin/init"
   - MOLECULE_DISTRO: debian8
     MOLECULE_DOCKER_COMMAND: "/lib/systemd/systemd"
   - MOLECULE_DISTRO: debian9
