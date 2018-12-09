@@ -3,15 +3,18 @@ dependency:
   name: galaxy
 driver:
   name: docker
+lint:
+  name: yamllint
+  options:
+    config-file: molecule/default/yaml-lint.yml
 platforms:
-  - name: instance 
+  - name: instance
     image: "rndmh3ro/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
     command: ${MOLECULE_DOCKER_COMMAND:-"/usr/lib/systemd/systemd"}
-
 provisioner:
   name: ansible
   lint:
@@ -20,20 +23,8 @@ provisioner:
     converge: playbook.yml
 scenario:
   name: default
-  test_sequence:
-    #- lint
-    - destroy
-    - dependency
-    - syntax
-    - create
-    - prepare
-    - converge
-    - idempotence
-    - side_effect
-    - verify
-    - destroy
 verifier:
   name: inspec
   lint:
     name: rubocop
-    enabled: False
+    enabled: false
