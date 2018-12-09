@@ -21,7 +21,7 @@
       set_fact:
         inspec_download_url: "https://packages.chef.io/files/stable/inspec/2.2.34/el/7/inspec-2.2.34-1.el7.x86_64.rpm"
         inspec_download_sha256sum: c3d3fcb89b746f6378e27c0b318f61a8cda8784f4354306a866c70b945d52cec
-      when: ansible_os_family == "RedHat" and ansible_distribution_major_version == "7"
+      when: (ansible_os_family == "RedHat" and ansible_distribution_major_version == "7") or ansible_distribution == "Amazon"
 
     - name: Setting variables (Debian 8 / Ubuntu 14.04)
       set_fact:
@@ -69,7 +69,6 @@
       command: "{{ inspec_bin }} exec {{ lookup('env', 'MOLECULE_INSPEC_REPO') }} --no-color"
       register: test_results
       ignore_errors: true
-      no_log: true
 
     - name: Display details about the Inspec results
       debug:

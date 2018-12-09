@@ -3,6 +3,10 @@ language: python
 services: docker
 
 env:
+  global:
+    - MOLECULE_INSPEC_REPO=https://github.com/dev-sec/ssh-baseline/
+
+env:
   - MOLECULE_DISTRO: centos6
     MOLECULE_DOCKER_COMMAND: "/sbin/init"
   - MOLECULE_DISTRO: centos7
