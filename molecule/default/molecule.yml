@@ -4,13 +4,13 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: centos6
+  - name: instance 
     image: "rndmh3ro/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
     pre_build_image: true
-    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    command: ${MOLECULE_DOCKER_COMMAND:-"/usr/lib/systemd/systemd"}
 
 provisioner:
   name: ansible
@@ -33,6 +33,7 @@ scenario:
     - verify
     - destroy
 verifier:
-  name: testinfra
+  name: inspec
   lint:
-    name: flake8
+    name: rubocop
+    enabled: False
