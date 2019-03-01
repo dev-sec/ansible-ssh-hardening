@@ -62,6 +62,19 @@ script:
   # Run container in detached state.
   - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-ssh-hardening:ro ${run_opts} rndmh3ro/docker-${distro}-ansible:${version} "${init}" > "${container_id}"'
 
+  # Install curl
+  - 'docker exec "$(cat ${container_id})" bash -c "(which apt-get && apt-get update && apt-get -y install curl) || /bin/true"'
+
+  # Get and install pip
+  - 'docker exec "$(cat ${container_id})" curl https://bootstrap.pypa.io/2.6/get-pip.py -o get-pip.py'
+  - 'docker exec "$(cat ${container_id})" python get-pip.py'
+
+  # Set up ansible-lint
+  - 'docker exec "$(cat ${container_id})" bash -c "python --version 2>&1 | grep \"2.6\" || pip install ansible-lint"'
+
+  # Run ansible-lint
+  - 'docker exec "$(cat ${container_id})" bash -c "python --version 2>&1 | grep \"2.6\" || ansible-lint ./"'
+
   # Test role.
   - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-ssh-hardening/tests/default_custom.yml'
   - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-ssh-hardening/tests/default.yml'
