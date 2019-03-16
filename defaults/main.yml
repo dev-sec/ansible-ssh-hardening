@@ -4,6 +4,9 @@ network_ipv6_enable: false              # sshd + ssh
 # true if sshd should be started and enabled
 ssh_server_enabled: true               # sshd
 
+# true if sshd should be restarted after taking changes in config. (for manual debugging)
+ssh_server_restart: true
+
 # true if DNS resolutions are needed, look up the remote host name, defaults to false from 6.8, see: http://www.openssh.com/txt/release-6.8
 ssh_use_dns: false                      # sshd
 
