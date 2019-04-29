@@ -69,7 +69,7 @@
   when:
     - ssh_use_pam
     - ssh_challengeresponseauthentication
-    - sshd_authenticationmethods
+    - "keyboard-interactive" in sshd_authenticationmethods
 
 - name: test to see if selinux is installed and running
   command: getenforce
