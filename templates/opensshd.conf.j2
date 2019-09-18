@@ -229,7 +229,7 @@ Banner {{ '/etc/ssh/banner.txt' if (ssh_banner|bool) else 'none' }}
 DebianBanner {{ 'yes' if (ssh_print_debian_banner|bool) else 'no' }}
 {% endif %}
 
-{% if sshd_version.stdout is version('5.4', '>') %}
+{% if sshd_version.stdout is version('5.4', '>=') %}
 # Reject keys that are explicitly blacklisted
 RevokedKeys /etc/ssh/revoked_keys
 {% endif %}
