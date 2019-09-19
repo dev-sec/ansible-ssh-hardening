@@ -225,7 +225,7 @@ PrintLastLog {{ 'yes' if (ssh_print_last_log|bool) else 'no' }}
 
 Banner {{ '/etc/ssh/banner.txt' if (ssh_banner|bool) else 'none' }}
 
-{% if ansible_os_family == 'Debian' -%}
+{% if (ansible_os_family == 'Debian' and sshd_version.stdout is version('5.2', '>=')) -%}
 DebianBanner {{ 'yes' if (ssh_print_debian_banner|bool) else 'no' }}
 {% endif %}
 
