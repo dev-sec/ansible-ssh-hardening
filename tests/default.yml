@@ -4,7 +4,7 @@
   pre_tasks:
     - package: name="{{item}}" state=present
       with_items:
-        - "openssh-clients"
+        - "openssh-client"
         - "openssh-server"
         - "libselinux-python"
       ignore_errors: true
