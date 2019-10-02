@@ -109,12 +109,7 @@ UsePAM {{ 'yes' if (ssh_use_pam|bool) else 'no' }}
 {% endif %}
 
 # Set AuthenticationMethods per default to publickey
-AuthenticationMethods {{ sshd_authenticationmethods|default("publickey") }}
-{% if 'keyboard-interactive' in sshd_authenticationmethods %}
-ChallengeResponseAuthentication yes
-{% elif 'password' in sshd_authenticationmethods %}
-PasswordAuthentication yes
-{% endif %}
+AuthenticationMethods {{ sshd_authenticationmethods }}
 
 # Disable password-based authentication, it can allow for potentially easier brute-force attacks.
 PasswordAuthentication {{ 'yes' if (ssh_server_password_login|bool) else 'no' }}
