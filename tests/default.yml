@@ -6,7 +6,7 @@
       with_items:
         - "openssh-client"
         - "openssh-server"
-        - "libselinux-python"
+        - "python-selinux"
       ignore_errors: true
     - apt: name="{{packages}}" state=present update_cache=true
       vars:
