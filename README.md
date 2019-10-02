@@ -128,6 +128,10 @@ bundle exec kitchen test
 # for development
 bundle exec kitchen create ssh-ubuntu1804-ansible-latest
 bundle exec kitchen converge ssh-ubuntu1804-ansible-latest
+bundle exec kitchen verify ssh-ubuntu1804-ansible-latest
+
+# cleanup
+bundle exec kitchen destroy ssh-ubuntu1804-ansible-latest
 ```
 
 ### Testing with Virtualbox
@@ -143,6 +147,8 @@ KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen create ssh-ubuntu-1804
 KITCHEN_YAML=".kitchen.vagrant.yml" bundle exec kitchen converge ssh-ubuntu-1804
 ```
 For more information see [test-kitchen](http://kitchen.ci/docs/getting-started)
+
+
 
 ## FAQ / Pitfalls
 
