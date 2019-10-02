@@ -6,11 +6,13 @@
       with_items:
         - "openssh-clients"
         - "openssh-server"
+        - "libselinux-python"
       ignore_errors: true
-    - apt: name="{{item}}" state=present update_cache=true
-      with_items:
-        - "openssh-client"
-        - "openssh-server"
+    - apt: name="{{packages}}" state=present update_cache=true
+      vars:
+        packages:
+          - "openssh-client"
+          - "openssh-server"
       ignore_errors: true
     - file: path="/var/run/sshd" state=directory
     - name: create ssh host keys

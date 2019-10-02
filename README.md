@@ -31,7 +31,7 @@ Warning: This role disables root-login on the target server! Please make sure yo
 |`ssh_gateway_ports` | `false` | `false` to disable binding forwarded ports to non-loopback addresses. Set to `true` to force binding on wildcard address. Set to `clientspecified` to allow the client to specify which address to bind to.|
 |`ssh_allow_agent_forwarding` | false | false to disable Agent Forwarding. Set to true to allow Agent Forwarding.|
 |`ssh_pam_support` | true | true if SSH has PAM support.|
-|`ssh_use_pam` | false | false to disable pam authentication.|
+|`ssh_use_pam` | true | false to disable pam authentication.|
 |`ssh_gssapi_support` | false | true if SSH has GSSAPI support.|
 |`ssh_kerberos_support` | true | true if SSH has Kerberos support.|
 |`ssh_deny_users` | '' | if specified, login is disallowed for user names that match one of the patterns.|
@@ -62,6 +62,7 @@ Warning: This role disables root-login on the target server! Please make sure yo
 |`ssh_print_debian_banner` | `false` | `true` to print debian specific banner |
 |`ssh_server_enabled` | `true` | `false` to disable the opensshd server |
 |`ssh_server_hardening` | `true` | `false` to stop harden the server |
+|`ssh_server_match_address` | '' | Introduces a conditional block.  If all of the criteria on the Match line are satisfied, the keywords on the following lines override those set in the global section of the config file, until either another Match line or the end of the file. |
 |`ssh_server_match_group` | '' | Introduces a conditional block.  If all of the criteria on the Match line are satisfied, the keywords on the following lines override those set in the global section of the config file, until either another Match line or the end of the file. |
 |`ssh_server_match_user` | '' | Introduces a conditional block.  If all of the criteria on the Match line are satisfied, the keywords on the following lines override those set in the global section of the config file, until either another Match line or the end of the file. |
 |`ssh_server_permit_environment_vars` | `false` | `true` to specify that ~/.ssh/environment and environment= options in ~/.ssh/authorized_keys are processed by sshd |
@@ -73,8 +74,11 @@ Warning: This role disables root-login on the target server! Please make sure yo
 |`ssh_ciphers` | [] | Change this list to overwrite ciphers. Defaults found in `defaults/main.yml` |
 |`ssh_custom_options` | [] | Custom lines for SSH client configuration |
 |`sshd_custom_options` | [] | Custom lines for SSH daemon configuration |
+<<<<<<< HEAD
 |`sshd_authenticationmethods` | `publickey` | Specifies the authentication methods that must be successfully completed for a user to be granted access. Defaults found in `defaults/main.yml`
-|
+|`sshd_syslog_facility` | 'AUTH' | The facility code that is used when logging messages from sshd |
+|`sshd_log_level` | 'VERBOSE' | the verbosity level that is used when logging messages from sshd | 
+|`sshd_strict_modes` | 'yes' | Check file modes and ownership of the user's files and home directory before accepting login |
 
 ## Configuring settings not listed in role-variables
 

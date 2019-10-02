@@ -42,11 +42,11 @@ HostKey {{key}}          # Req 20
 Protocol 2
 
 # Make sure sshd checks file modes and ownership before accepting logins. This prevents accidental misconfiguration.
-StrictModes yes
+StrictModes {{ 'yes' if (sshd_strict_modes|bool) else 'no' }}
 
 # Logging, obsoletes QuietMode and FascistLogging
-SyslogFacility AUTH
-LogLevel VERBOSE
+SyslogFacility {{ sshd_syslog_facility }}
+LogLevel {{ sshd_log_level }}
 
 # Cryptography
 # ------------
@@ -238,7 +238,7 @@ Subsystem sftp internal-sftp -l INFO -f LOCAL6
 # These lines must appear at the *end* of sshd_config
 Match Group sftponly
     ForceCommand internal-sftp -l INFO -f LOCAL6
-{% if sftp_chroot -%}
+{% if sftp_chroot %}
     ChrootDirectory {{ sftp_chroot_dir }}
 {% endif %}
     AllowTcpForwarding no
@@ -248,13 +248,25 @@ Match Group sftponly
     X11Forwarding no
 {% endif %}
 
+{% if ssh_server_match_address -%}
+# Address matching configuration
+# ============================
+
+{% for item in ssh_server_match_address -%}
+Match Address {{ item.address }}
+  {% for rule in item.rules %}
+    {{ rule | indent(4) }}
+  {% endfor %}
+{% endfor %}
+{% endif %}
+
 {% if ssh_server_match_group -%}
 # Group matching configuration
 # ============================
 
 {% for item in ssh_server_match_group -%}
 Match Group {{ item.group }}
-  {% for rule in item.rules -%}
+  {% for rule in item.rules %}
     {{ rule | indent(4) }}
   {% endfor %}
 {% endfor %}
@@ -266,7 +278,7 @@ Match Group {{ item.group }}
 
 {% for item in ssh_server_match_user -%}
 Match User {{ item.user }}
-  {% for rule in item.rules -%}
+  {% for rule in item.rules %}
     {{ rule | indent(4) }}
   {% endfor %}
 {% endfor %}

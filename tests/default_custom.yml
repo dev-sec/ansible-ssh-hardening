@@ -6,11 +6,13 @@
       with_items:
         - "openssh-clients"
         - "openssh-server"
+        - "libselinux-python"
       ignore_errors: true
-    - apt: name="{{item}}" state=present update_cache=true
-      with_items:
-        - "openssh-client"
-        - "openssh-server"
+    - apt: name="{{packages}}" state=present update_cache=true
+      vars:
+        packages:
+          - "openssh-client"
+          - "openssh-server"
       ignore_errors: true
     - file: path="/var/run/sshd" state=directory
     - name: create ssh host keys
@@ -45,6 +47,11 @@
     sftp_enabled: true
     sftp_chroot: true
     #ssh_server_enabled: false
+    ssh_server_match_address:
+      - address: '192.168.1.1/24'
+        rules:
+          - 'AllowTcpForwarding yes'
+          - 'AllowAgentForwarding no'
     ssh_server_match_group:
       - group: 'root'
         rules:
@@ -84,4 +91,3 @@
       - "Include /etc/ssh/ssh_config.d/*"
     sshd_custom_options:
       - "AcceptEnv LANG"
-

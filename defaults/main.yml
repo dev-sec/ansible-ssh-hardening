@@ -65,7 +65,7 @@ ssh_allow_agent_forwarding: false       # sshd
 ssh_pam_support: true
 
 # false to disable pam authentication.
-ssh_use_pam: false      # sshd
+ssh_use_pam: true # sshd
 
 # specify AuthenticationMethods
 sshd_authenticationmethods: 'publickey'
@@ -148,6 +148,9 @@ ssh_server_match_user: false            # sshd
 # list of hashes (containing group and rules) to generate Match Group blocks for.
 ssh_server_match_group: false           # sshd
 
+# list of hashes (containing addresses/subnets and rules) to generate Match Address blocks for.
+ssh_server_match_address: false           # sshd
+
 ssh_server_permit_environment_vars: false
 
 # maximum number of concurrent unauthenticated connections to the SSH daemon
@@ -224,3 +227,9 @@ ssh_custom_options: []
 
 # Custom options for SSH daemon configuration file
 sshd_custom_options: []
+
+# Logging
+sshd_syslog_facility: 'AUTH'
+sshd_log_level: 'VERBOSE'
+
+sshd_strict_modes: yes
