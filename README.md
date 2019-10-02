@@ -74,7 +74,6 @@ Warning: This role disables root-login on the target server! Please make sure yo
 |`ssh_ciphers` | [] | Change this list to overwrite ciphers. Defaults found in `defaults/main.yml` |
 |`ssh_custom_options` | [] | Custom lines for SSH client configuration |
 |`sshd_custom_options` | [] | Custom lines for SSH daemon configuration |
-<<<<<<< HEAD
 |`sshd_authenticationmethods` | `publickey` | Specifies the authentication methods that must be successfully completed for a user to be granted access. Defaults found in `defaults/main.yml`
 |`sshd_syslog_facility` | 'AUTH' | The facility code that is used when logging messages from sshd |
 |`sshd_log_level` | 'VERBOSE' | the verbosity level that is used when logging messages from sshd | 
