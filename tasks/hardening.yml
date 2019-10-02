@@ -67,8 +67,15 @@
 - name: include tasks to setup 2FA
   include_tasks: 2fa.yml
   when:
-    - ssh_use_pam
-    - ssh_challengeresponseauthentication
+    - ssh_use_pam | bool
+    - ssh_challengeresponseauthentication | bool
+
+- name: test to see if selinux is installed and running
+  command: getenforce
+  register: sestatus
+  failed_when: false
+  changed_when: false
+  check_mode: no
 
 - name: include selinux specific tasks
   include_tasks: selinux.yml
