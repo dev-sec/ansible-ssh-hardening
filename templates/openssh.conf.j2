@@ -82,6 +82,9 @@ StrictHostKeyChecking ask
 {# This outputs "KexAlgorithms <list-of-algos>" if ssh_kex is defined or "#KexAlgorithms" if ssh_kex is undefined #}
 {{ "KexAlgorithms "+ssh_kex| join(',') if ssh_kex else "KexAlgorithms"|comment }}
 
+{# This outpus "PubkeyAcceptedKeyTypes <list-of-key-types>" if ssh_pubkeyacceptedkeytypes is defined #}
+{{ "PubkeyAcceptedKeyTypes "+ ssh_pubkeyacceptedkeytypes|join(',') if ssh_pubkeyacceptedkeytypes else "PubkeyAcceptedKeyTypes"|comment }}
+
 # Disable agent forwarding, since local agent could be accessed through forwarded connection.
 ForwardAgent no
 

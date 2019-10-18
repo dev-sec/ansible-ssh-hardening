@@ -70,6 +70,10 @@ ssh_use_pam: true # sshd
 # specify AuthenticationMethods
 sshd_authenticationmethods: 'publickey'
 
+# specify PubkeyAcceptedKeyTypes
+ssh_pubkeyacceptedkeytypes: []
+sshd_pubkeyacceptedkeytypes: []
+
 # true if SSH support GSSAPI
 ssh_gssapi_support: false
 

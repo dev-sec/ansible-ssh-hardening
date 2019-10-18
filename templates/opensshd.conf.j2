@@ -97,6 +97,8 @@ MaxStartups {{ssh_max_startups}}
 
 # Enable public key authentication
 PubkeyAuthentication yes
+{# This outpus "PubkeyAcceptedKeyTypes <list-of-key-types>" if sshd_pubkeyacceptedkeytypes is defined #}
+{{ "PubkeyAcceptedKeyTypes "+ sshd_pubkeyacceptedkeytypes|join(',') if sshd_pubkeyacceptedkeytypes else "PubkeyAcceptedKeyTypes"|comment }}
 
 # Never use host-based authentication. It can be exploited.
 IgnoreRhosts yes
