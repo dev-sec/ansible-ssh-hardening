@@ -73,6 +73,9 @@ sshd_authenticationmethods: 'publickey'
 # true if SSH support GSSAPI
 ssh_gssapi_support: false
 
+# Use an external script or executable to get authorized keys. Always run as user nobody
+ssh_authorized_keys_command: '' # sshd
+
 # true if SSH support Kerberos
 ssh_kerberos_support: true
 

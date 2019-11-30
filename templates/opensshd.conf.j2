@@ -131,6 +131,11 @@ KerberosTicketCleanup yes
 GSSAPIAuthentication {{ 'yes' if ssh_gssapi_support else 'no' }}
 GSSAPICleanupCredentials yes
 
+{% if ssh_authorized_keys_command -%}
+AuthorizedKeysCommand {{ ssh_authorized_keys_command }}
+AuthorizedKeysCommandUser nobody
+{% endif %}
+
 # In case you don't use PAM (`UsePAM no`), you can alternatively restrict users and groups here. For key-based authentication this is not necessary, since all keys must be explicitely enabled.
 {% if ssh_deny_users -%}
 DenyUsers {{ssh_deny_users}}
