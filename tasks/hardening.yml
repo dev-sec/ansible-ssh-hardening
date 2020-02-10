@@ -1,13 +1,15 @@
 ---
 - name: Set OS dependent variables
-  include_vars: '{{ item }}'
-  with_first_found:
-   - files:
-     - '{{ ansible_distribution }}_{{ ansible_distribution_major_version }}.yml'
-     - '{{ ansible_distribution }}.yml'
-     - '{{ ansible_os_family }}_{{ ansible_distribution_major_version }}.yml'
-     - '{{ ansible_os_family }}.yml'
-   - skip: True
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_major_version| default('none') }}.yml"
+        - "{{ ansible_facts.distribution }}.yml"
+        - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version| default('none') }}.yml"
+      paths:
+        - "vars"
+  tags: always
 
 - name: get openssh-version
   shell: set -o pipefail && ssh -V 2>&1 | sed -r 's/.*_([0-9]*\.[0-9]).*/\1/g'
