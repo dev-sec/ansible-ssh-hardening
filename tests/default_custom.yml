@@ -7,6 +7,13 @@
         ansible_python_interpreter: /usr/bin/python3
       when: ansible_facts.distribution == 'Fedora'
 
+    - package:
+        name:
+         - awk
+         - openssh
+        state: installed
+      when: ansible_facts.distribution == 'Archlinux'
+
     - package: name="{{ packages }}" state=present
       vars:
         packages:
