@@ -59,10 +59,10 @@ ssh_permit_tunnel: false
 ssh_remote_hosts: []
 
 # Set this to "without-password" or "yes" to allow root to login
-ssh_permit_root_login: 'no'         # sshd
+ssh_permit_root_login: false        # sshd
 
 # false to disable TCP Forwarding. Set to true to allow TCP Forwarding.
-ssh_allow_tcp_forwarding: 'no'      # sshd
+ssh_allow_tcp_forwarding: false     # sshd
 
 # false to disable binding forwarded ports to non-loopback addresses. Set to true to force binding on wildcard address.
 # Set to 'clientspecified' to allow the client to specify which address to bind to.
@@ -164,7 +164,7 @@ ssh_server_match_group: false       # sshd
 # list of hashes (containing addresses/subnets and rules) to generate Match Address blocks for.
 ssh_server_match_address: false     # sshd
 
-ssh_server_permit_environment_vars: 'no'
+ssh_server_permit_environment_vars: false
 ssh_server_accept_env_vars : ''
 
 # maximum number of concurrent unauthenticated connections to the SSH daemon

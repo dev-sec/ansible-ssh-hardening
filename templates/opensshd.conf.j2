@@ -1,5 +1,7 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {{ ansible_managed | comment }}
+{% macro as_bool(value) %}{{ value | bool | ternary('yes', 'no') }}{% endmacro %}
+{% macro as_bool_or_string(value) %}{{ value | ternary('yes', 'no') if value is boolean else value }}{% endmacro %}
 
 # This is the ssh client system-wide configuration file.
 # See sshd_config(5) for more information on any settings used. Comments will be added only to clarify why a configuration was chosen.
@@ -16,7 +18,7 @@
 # ===================
 
 # Either disable or only allow root login via certificates.
-PermitRootLogin {{ ssh_permit_root_login }}
+PermitRootLogin {{ as_bool_or_string(ssh_permit_root_login) }}
 
 # Define which port sshd should listen to. Default to `22`.
 {% for port in ssh_server_ports %}
@@ -48,7 +50,7 @@ HostKey {{ key }}
 Protocol 2
 
 # Make sure sshd checks file modes and ownership before accepting logins. This prevents accidental misconfiguration.
-StrictModes {{ 'yes' if (sshd_strict_modes|bool) else 'no' }}
+StrictModes {{ as_bool(sshd_strict_modes) }}
 
 # Logging, obsoletes QuietMode and FascistLogging
 SyslogFacility {{ sshd_syslog_facility }}
@@ -115,7 +117,7 @@ HostbasedAuthentication no
 
 # Enable PAM to enforce system wide rules
 {% if ssh_pam_support %}
-UsePAM {{ 'yes' if (ssh_use_pam|bool) else 'no' }}
+UsePAM {{ as_bool(ssh_use_pam) }}
 {% endif %}
 
 # Set AuthenticationMethods per default to publickey
@@ -125,9 +127,9 @@ AuthenticationMethods {{ sshd_authenticationmethods }}
 {% endif %}
 
 # Disable password-based authentication, it can allow for potentially easier brute-force attacks.
-PasswordAuthentication {{ 'yes' if (ssh_server_password_login|bool) else 'no' }}
+PasswordAuthentication {{ as_bool(ssh_server_password_login) }}
 PermitEmptyPasswords no
-ChallengeResponseAuthentication {{ 'yes' if (ssh_challengeresponseauthentication|bool) else 'no' }}
+ChallengeResponseAuthentication {{ as_bool(ssh_challengeresponseauthentication) }}
 
 {% if ssh_kerberos_support %}
 # Only enable Kerberos authentication if it is configured.
@@ -138,7 +140,7 @@ KerberosTicketCleanup yes
 {% endif %}
 
 # Only enable GSSAPI authentication if it is configured.
-GSSAPIAuthentication {{ 'yes' if ssh_gssapi_support else 'no' }}
+GSSAPIAuthentication {{ as_bool(ssh_gssapi_support) }}
 GSSAPICleanupCredentials yes
 
 # In case you don't use PAM (`UsePAM no`), you can alternatively restrict users and groups here. For key-based authentication this is not necessary, since all keys must be explicitely enabled.
@@ -180,10 +182,11 @@ ClientAliveInterval {{ ssh_client_alive_interval }}
 ClientAliveCountMax {{ ssh_client_alive_count }}
 
 # Disable tunneling
-PermitTunnel {{ 'yes' if (ssh_permit_tunnel|bool) else 'no' }}
+PermitTunnel {{ as_bool(ssh_permit_tunnel) }}
 
 # Disable forwarding tcp connections.
 # no real advantage without denied shell access
+{% set ssh_allow_tcp_forwarding = as_bool_or_string(ssh_allow_tcp_forwarding) %}
 {% if sshd_version is version('6.2', '>=') %}
 AllowTcpForwarding {{ ssh_allow_tcp_forwarding if (ssh_allow_tcp_forwarding in ('yes', 'no', 'local', 'all')) else 'no' }}
 {% else %}
@@ -192,7 +195,7 @@ AllowTcpForwarding {{ ssh_allow_tcp_forwarding if (ssh_allow_tcp_forwarding in (
 
 # Disable agent forwarding, since local agent could be accessed through forwarded connection.
 # no real advantage without denied shell access
-AllowAgentForwarding {{ 'yes' if (ssh_allow_agent_forwarding|bool) else 'no' }}
+AllowAgentForwarding {{ as_bool(ssh_allow_agent_forwarding) }}
 
 {% if ssh_gateway_ports|bool %}
 # Port forwardings are forced to bind to the wildcard address
@@ -212,7 +215,7 @@ X11UseLocalhost yes
 # User environment configuration
 # ==============================
 
-PermitUserEnvironment {{ ssh_server_permit_environment_vars }}
+PermitUserEnvironment {{ as_bool_or_string(ssh_server_permit_environment_vars) }}
 
 {% if ssh_server_accept_env_vars %}
 AcceptEnv {{ ssh_server_accept_env_vars }}
@@ -221,20 +224,20 @@ AcceptEnv {{ ssh_server_accept_env_vars }}
 # Misc. configuration
 # ===================
 
-Compression {{ 'yes' if (ssh_compression|bool) else 'no' }}
+Compression {{ as_bool(ssh_compression) }}
 
-UseDNS {{ 'yes' if (ssh_use_dns|bool) else 'no' }}
+UseDNS {{ as_bool(ssh_use_dns) }}
 
-PrintMotd {{ 'yes' if (ssh_print_motd|bool) else 'no' }}
+PrintMotd {{ as_bool(ssh_print_motd) }}
 
 {% if ansible_facts.os_family != 'FreeBSD' %}
-PrintLastLog {{ 'yes' if (ssh_print_last_log|bool) else 'no' }}
+PrintLastLog {{ as_bool(ssh_print_last_log) }}
 {% endif %}
 
 Banner {{ '/etc/ssh/banner.txt' if (ssh_banner|bool) else 'none' }}
 
 {% if ansible_facts.os_family == 'Debian' %}
-DebianBanner {{ 'yes' if (ssh_print_debian_banner|bool) else 'no' }}
+DebianBanner {{ as_bool(ssh_print_debian_banner) }}
 {% endif %}
 
 # Reject keys that are explicitly blacklisted

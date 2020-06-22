@@ -1,5 +1,6 @@
 #jinja2: trim_blocks: "true", lstrip_blocks: "true"
 {{ ansible_managed | comment }}
+{% macro as_bool(value) %}{{ value | bool | ternary('yes', 'no') }}{% endmacro %}
 
 # This is the ssh client system-wide configuration file.
 # See ssh_config(5) for more information on any settings used. Comments will be added only to clarify why a configuration was chosen.
@@ -98,7 +99,7 @@ RSAAuthentication yes
 {% endif %}
 
 # Disable password-based authentication, it can allow for potentially easier brute-force attacks.
-PasswordAuthentication {{ 'yes' if ssh_client_password_login else 'no' }}
+PasswordAuthentication {{ as_bool(ssh_client_password_login) }}
 
 # Only use GSSAPIAuthentication if implemented on the network.
 GSSAPIAuthentication no
@@ -114,12 +115,12 @@ PermitLocalCommand no
 # Misc. configuration
 # ===================
 
-Compression {{ 'yes' if (ssh_client_compression|bool) else 'no' }}
+Compression {{ as_bool(ssh_client_compression) }}
 
 #EscapeChar ~
 #VisualHostKey yes
 
 {% if sshd_version is version('7.1', '<=') %}
 # Disable experimental client roaming. This is known to cause potential issues with secrets being disclosed to malicious servers and defaults to being disabled.
-UseRoaming {{ 'yes' if ssh_client_roaming else 'no' }}
+UseRoaming {{ as_bool(ssh_client_roaming) }}
 {% endif %}
