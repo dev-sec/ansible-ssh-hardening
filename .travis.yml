@@ -5,60 +5,71 @@ env:
   - distro: centos6
     version: latest
     init: /sbin/init
+    volume: ":"
 
   - distro: centos7
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
     version: latest
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: centos8
     init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw"
+    run_opts: "--privileged"
     version: latest
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: oracle6
     version: latest
     init: /sbin/init
+    volume: ":"
 
 #  - distro: oracle7
 #    init: /usr/lib/systemd/systemd
-#    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+#    run_opts: "--privileged"
 #    version: latest
 
   - distro: ubuntu1604
     version: latest
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: ubuntu1804
     version: latest
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: debian9
     version: latest
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: debian10
     version: latest
     init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: amazon
     init: /lib/systemd/systemd
     version: latest
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: fedora
     init: /lib/systemd/systemd
     version: latest
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
   - distro: arch
     init: /lib/systemd/systemd
     version: latest
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged"
+    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
   # Pull container
@@ -70,7 +81,7 @@ script:
 
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/ansible-ssh-hardening:ro ${run_opts} rndmh3ro/docker-${distro}-ansible:${version} "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${volume}" --volume="${PWD}":/etc/ansible/roles/ansible-ssh-hardening:ro ${run_opts} rndmh3ro/docker-${distro}-ansible:${version} "${init}" > "${container_id}"'
 
   # Test role.
   - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/ansible-ssh-hardening/tests/default_custom.yml --diff'
