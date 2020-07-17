@@ -12,8 +12,8 @@ env:
     version: latest
 
   - distro: centos8
-    init: /sbin/init
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    init: /usr/lib/systemd/systemd
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:rw"
     version: latest
 
   - distro: oracle6
