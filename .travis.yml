@@ -5,7 +5,7 @@ env:
   global:
     - version=latest
     - init=/sbin/init
-    - run_opts="--privileged"
+    - run_opts="--cap-add SYS_ADMIN"
     - volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
   jobs:
     - distro=centos6
@@ -20,11 +20,13 @@ env:
     - distro=ubuntu1604
     - distro=ubuntu1804
     - distro=debian9
+      init=/lib/systemd/systemd
     - distro=debian10
     - distro=amazon
     - distro=fedora
     - distro=arch
       init=/usr/lib/systemd/systemd
+      run_opts="--privileged"
 
 before_install:
   # Pull container
