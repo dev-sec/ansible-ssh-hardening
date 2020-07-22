@@ -4,18 +4,16 @@ services: docker
 env:
   global:
     - version=latest
-    - init=/usr/lib/systemd/systemd
+    - init=/sbin/init
     - run_opts="--cap-add SYS_ADMIN"
     - volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
   jobs:
     - distro=centos6
-      init=/sbin/init
       volume=":"
       run_opts=""
     - distro=centos7
     - distro=centos8
     - distro=oracle6
-      init=/sbin/init
       volume=":"
       run_opts=""
 #    - distro=oracle7
@@ -26,6 +24,7 @@ env:
     - distro=amazon
     - distro=fedora
     - distro=arch
+      init=/usr/lib/systemd/systemd
 
 before_install:
   # Pull container
