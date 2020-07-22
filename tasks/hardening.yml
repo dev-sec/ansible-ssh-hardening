@@ -109,5 +109,5 @@
     src: sshd
     dest: /etc/sysconfig/sshd
   when:
-    - ('crypto-policies' in ansible_facts.packages)
     - sshd_disable_crypto_policy | bool
+    - ('crypto-policies' in ansible_facts.packages)
