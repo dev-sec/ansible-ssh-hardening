@@ -110,9 +110,17 @@ platforms:
   driver:
     image: rndmh3ro/docker-fedora-ansible:latest
     platform: centos
-    run_command: /sbin/init
     provision_command:
       - dnf install -y python
+      - sed -i '/nologin/d' /etc/pam.d/sshd
+      - systemctl enable sshd.service
+
+- name: arch-ansible-latest
+  driver:
+    image: rndmh3ro/docker-arch-ansible:latest
+    platform: arch
+    run_command: /usr/lib/systemd/systemd
+    provision_command:
       - sed -i '/nologin/d' /etc/pam.d/sshd
       - systemctl enable sshd.service
 
