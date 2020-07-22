@@ -98,19 +98,16 @@
   include_tasks: selinux.yml
   when: ansible_facts.selinux and ansible_facts.selinux.status == "enabled"
 
-- name: check SSH server CRYPTO_POLICY
-  find:
-    path: /etc/sysconfig
-    pattern: sshd
-    contains: '.*CRYPTO_POLICY=.*'
-  register: crypto_policy
+- name: gather package facts
+  package_facts:
   check_mode: no
+  when:
+    - sshd_disable_crypto_policy | bool
 
 - name: disable SSH server CRYPTO_POLICY
-  lineinfile:
-    path: /etc/sysconfig/sshd
-    regexp: 'CRYPTO_POLICY='
-    line: CRYPTO_POLICY=
+  copy:
+    src: sshd
+    dest: /etc/sysconfig/sshd
   when:
-    - crypto_policy.matched > 0
+    - ('crypto-policies' in ansible_facts.packages)
     - sshd_disable_crypto_policy | bool
