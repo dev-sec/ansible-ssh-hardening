@@ -2,74 +2,30 @@
 services: docker
 
 env:
-  - distro=centos6
-    version=latest
-    init=/sbin/init
-    volume=":"
-
-  - distro=centos7
-    init=/usr/lib/systemd/systemd
-    run_opts="--cap-add SYS_ADMIN"
-    version=latest
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=centos8
-    init=/usr/lib/systemd/systemd
-    run_opts="--cap-add SYS_ADMIN"
-    version=latest
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=oracle6
-    version=latest
-    init=/sbin/init
-    volume=":"
-
-#  - distro=oracle7
-#    init=/usr/lib/systemd/systemd
-#    run_opts="--cap-add SYS_ADMIN"
-#    version=latest
-
-  - distro=ubuntu1604
-    version=latest
-    init=/lib/systemd/systemd
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=ubuntu1804
-    version=latest
-    init=/lib/systemd/systemd
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=debian9
-    version=latest
-    init=/lib/systemd/systemd
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=debian10
-    version=latest
-    init=/lib/systemd/systemd
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=amazon
-    init=/lib/systemd/systemd
-    version=latest
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=fedora
-    init=/lib/systemd/systemd
-    version=latest
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
-
-  - distro=arch
-    init=/lib/systemd/systemd
-    version=latest
-    run_opts="--cap-add SYS_ADMIN"
-    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  global:
+    - version=latest
+    - init=/usr/lib/systemd/systemd
+    - run_opts="--cap-add SYS_ADMIN"
+    - volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  jobs:
+    - distro=centos6
+      init=/sbin/init
+      volume=":"
+      run_opts=""
+    - distro=centos7
+    - distro=centos8
+    - distro=oracle6
+      init=/sbin/init
+      volume=":"
+      run_opts=""
+#    - distro=oracle7
+    - distro=ubuntu1604
+    - distro=ubuntu1804
+    - distro=debian9
+    - distro=debian10
+    - distro=amazon
+    - distro=fedora
+    - distro=arch
 
 before_install:
   # Pull container
