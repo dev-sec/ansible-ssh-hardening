@@ -5,7 +5,7 @@ env:
   global:
     - version=latest
     - init=/sbin/init
-    - run_opts="--cap-add SYS_ADMIN"
+    - run_opts="--privileged"
     - volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
   jobs:
     - distro=centos6
