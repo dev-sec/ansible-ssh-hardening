@@ -2,74 +2,74 @@
 services: docker
 
 env:
-  - distro: centos6
-    version: latest
-    init: /sbin/init
-    volume: ":"
+  - distro=centos6
+    version=latest
+    init=/sbin/init
+    volume=":"
 
-  - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--cap-add SYS_ADMIN"
-    version: latest
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=centos7
+    init=/usr/lib/systemd/systemd
+    run_opts="--cap-add SYS_ADMIN"
+    version=latest
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: centos8
-    init: /usr/lib/systemd/systemd
-    run_opts: "--cap-add SYS_ADMIN"
-    version: latest
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=centos8
+    init=/usr/lib/systemd/systemd
+    run_opts="--cap-add SYS_ADMIN"
+    version=latest
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: oracle6
-    version: latest
-    init: /sbin/init
-    volume: ":"
+  - distro=oracle6
+    version=latest
+    init=/sbin/init
+    volume=":"
 
-#  - distro: oracle7
-#    init: /usr/lib/systemd/systemd
-#    run_opts: "--cap-add SYS_ADMIN"
-#    version: latest
+#  - distro=oracle7
+#    init=/usr/lib/systemd/systemd
+#    run_opts="--cap-add SYS_ADMIN"
+#    version=latest
 
-  - distro: ubuntu1604
-    version: latest
-    init: /lib/systemd/systemd
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=ubuntu1604
+    version=latest
+    init=/lib/systemd/systemd
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: ubuntu1804
-    version: latest
-    init: /lib/systemd/systemd
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=ubuntu1804
+    version=latest
+    init=/lib/systemd/systemd
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: debian9
-    version: latest
-    init: /lib/systemd/systemd
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=debian9
+    version=latest
+    init=/lib/systemd/systemd
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: debian10
-    version: latest
-    init: /lib/systemd/systemd
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=debian10
+    version=latest
+    init=/lib/systemd/systemd
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: amazon
-    init: /lib/systemd/systemd
-    version: latest
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=amazon
+    init=/lib/systemd/systemd
+    version=latest
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: fedora
-    init: /lib/systemd/systemd
-    version: latest
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=fedora
+    init=/lib/systemd/systemd
+    version=latest
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
-  - distro: arch
-    init: /lib/systemd/systemd
-    version: latest
-    run_opts: "--cap-add SYS_ADMIN"
-    volume: "/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  - distro=arch
+    init=/lib/systemd/systemd
+    version=latest
+    run_opts="--cap-add SYS_ADMIN"
+    volume="/sys/fs/cgroup:/sys/fs/cgroup:ro"
 
 before_install:
   # Pull container
