@@ -61,7 +61,7 @@
     control: optional
     module_path: pam_motd.so
     state: absent
-    backup: yes
+    backup: true
   when:
     - ssh_server_hardening | bool
     - ssh_pam_support | bool
@@ -109,6 +109,9 @@
   copy:
     src: sshd
     dest: /etc/sysconfig/sshd
+    owner: 'root'
+    group: 'root'
+    mode: '0640'
   when:
     - sshd_disable_crypto_policy | bool
     - ('crypto-policies' in ansible_facts.packages)

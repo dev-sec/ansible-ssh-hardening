@@ -40,6 +40,9 @@
       copy:
         src: 'ssh_password'
         dest: '{{ ssh_custom_selinux_dir }}'
+        owner: 'root'
+        group: 'root'
+        mode: '0600'
 
     - name: check and compile policy
       command: checkmodule -M -m -o {{ ssh_custom_selinux_dir }}/ssh_password.mod {{ ssh_custom_selinux_dir }}/ssh_password

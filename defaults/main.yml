@@ -1,3 +1,4 @@
+---
 # true if IPv6 is needed
 network_ipv6_enable: false          # sshd + ssh
 
