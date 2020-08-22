@@ -19,7 +19,7 @@
   register: ssh_password_module
   failed_when: false
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 # The following tasks only get executed when selinux is in state enforcing,
 # UsePam is 'no' and the ssh_password module is not installed. See this issue for
