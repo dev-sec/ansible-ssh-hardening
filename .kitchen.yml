@@ -129,6 +129,11 @@ platforms:
         - sed -i '/nologin/d' /etc/pam.d/sshd
         - systemctl enable sshd.service
 
+  - name: openwrt-ansible-latest
+    driver:
+      image: rndmh3ro/docker-openwrt-ansible:latest
+      platform: openwrt
+
 verifier:
   name: inspec
   sudo: true

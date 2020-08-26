@@ -28,6 +28,7 @@ env:
     - distro=arch
       init=/usr/lib/systemd/systemd
       run_opts="--privileged"
+    - distro=openwrt
 
 before_install:
   # Pull container
