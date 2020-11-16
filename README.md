@@ -1,13 +1,11 @@
 # ssh-hardening (Ansible Role)
 
-[![Build Status](http://img.shields.io/travis/dev-sec/ansible-ssh-hardening.svg)][1]
-[![Ansible Galaxy](https://img.shields.io/badge/galaxy-ssh--hardening-660198.svg)][3]
 
-## Description
+**Attention:** This role has been migrated to our hardening-collection:
+* https://github.com/dev-sec/ansible-os-hardening/
+* https://galaxy.ansible.com/devsec/hardening
 
-This role provides secure ssh-client and ssh-server configurations.  It is intended to be compliant with the [DevSec SSH Baseline](https://github.com/dev-sec/ssh-baseline).
-
-Warning: This role disables root-login on the target server! Please make sure you have another user with su or sudo permissions that can login into the server.
+Please open any issues and pull requests there!
 
 ## Requirements
 
